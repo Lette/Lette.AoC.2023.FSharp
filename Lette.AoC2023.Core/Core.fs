@@ -122,3 +122,10 @@ module Array2D =
             | _                  -> find' x (y + 1) (acc + if arr[x, y] = item then 1 else 0)
 
         find' 0 0 0
+
+[<RequireQualifiedAccess>]
+module String =
+    let indexOfAny chars (str : string) = str.IndexOfAny chars
+    let lastIndexOfAny chars (str : string) = str.LastIndexOfAny chars
+    let getChar index (str : string) = str[index]
+    let replace (a : string) (b : string) (str : string) = str.Replace (a, b)

@@ -47,7 +47,7 @@ type Puzzle<'input, 'output1, 'output2 when 'output1: equality and 'output2: equ
             createResult part actual expected elapsed string
 
     static member init day parser runner1 (expected1: 'output1 option) runner2 (expected2: 'output2 option) =
-        Puzzle<'input, 'output1, 'output2> (day, parser, runner1, expected1, runner2, expected2)
+        Puzzle<'input, 'output1, 'output2> (day, parser day, runner1, expected1, runner2, expected2)
 
     interface IPuzzle with
         member _.Day with get () = day
