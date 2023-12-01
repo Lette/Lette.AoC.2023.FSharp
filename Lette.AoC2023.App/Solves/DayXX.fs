@@ -22,6 +22,6 @@ module DayXX =
     let puzzle =
         Puzzle.init
             0
-            (parse (getInput 0))
+            (getInput >> parse)
             part1 None
             part2 None
