@@ -25,8 +25,9 @@
 
     <ItemGroup>
         <Compile Include="CoreTests.fs" />
-        <Compile Include="DayXXTests.fs" />
         <Compile Include="Day01Tests.fs" />
+        <Compile Include="Day02Tests.fs" />
+        <Compile Include="DayXXTests.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 

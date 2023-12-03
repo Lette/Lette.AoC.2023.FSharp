@@ -57,6 +57,7 @@ module Program =
         let puzzles =
             [
                 Day01.puzzle
+                Day02.puzzle
             ] : IPuzzle list
 
         Presentation.printHeader ()
