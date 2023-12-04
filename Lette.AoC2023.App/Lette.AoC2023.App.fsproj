@@ -12,12 +12,14 @@
     <ItemGroup>
         <Content Include="Input\Day01.txt" />
         <Content Include="Input\Day02.txt" />
+        <Content Include="Input\Day03.txt" />
         <Content Include="Input\DayXX.txt" />
         <Compile Include="Data.fs" />
+        <Compile Include="Presentation.fs" />
         <Compile Include="Solves\Day01.fs" />
         <Compile Include="Solves\Day02.fs" />
+        <Compile Include="Solves\Day03.fs" />
         <Compile Include="Solves\DayXX.fs" />
-        <Compile Include="Presentation.fs" />
         <Compile Include="Timing.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
