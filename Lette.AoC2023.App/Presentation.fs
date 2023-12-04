@@ -30,7 +30,7 @@ module Presentation =
         | Fail    (day, part, actual, expected, elapsed) -> formattedFail    day part actual expected elapsed.TotalMilliseconds
         | Success (day, part, actual,           elapsed) -> formattedSuccess day part actual          elapsed.TotalMilliseconds
 
-    let private cprintf color format =
+    let cprintf color format =
         let continuation (result : string) =
             let previousColor = Console.ForegroundColor
             try

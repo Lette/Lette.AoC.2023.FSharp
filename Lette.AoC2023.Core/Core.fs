@@ -123,6 +123,26 @@ module Array2D =
 
         find' 0 0 0
 
+    let mapiRows f arr =
+        let height = arr |> Array2D.length1
+
+        [
+            for x in 0 .. height - 1 do
+                yield f x arr[x, *]
+        ]
+
+    let mapRows f arr =
+        let height = arr |> Array2D.length1
+
+        [
+            for x in 0 .. height - 1 do
+                yield f arr[x, *]
+        ]
+
+    let toListOfLists arr =
+        arr
+        |> mapRows Array.toList
+
 [<RequireQualifiedAccess>]
 module String =
     let indexOfAny chars (str : string) = str.IndexOfAny chars
