@@ -142,3 +142,10 @@ module Array2D =
     let toListOfLists arr =
         arr
         |> mapRows Array.toList
+
+[<RequireQualifiedAccess>]
+module String =
+    let indexOfAny chars (str : string) = str.IndexOfAny chars
+    let lastIndexOfAny chars (str : string) = str.LastIndexOfAny chars
+    let getChar index (str : string) = str[index]
+    let replace (a : string) (b : string) (str : string) = str.Replace (a, b)

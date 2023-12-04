@@ -6,110 +6,48 @@ open Microsoft.FSharp.Core.Operators.Checked
 module Day01 =
 
     let parse input () =
-        
-        let charP = anyOf (['a'..'z'] @ ['0'..'9'])
 
-        let allP = sepBy' (many charP) newlineP
+        let allP = sepBy' restOfLine1 newlineP
 
         Parser.run allP input
 
+    let digits = [| '1'; '2'; '3'; '4'; '5'; '6'; '7'; '8'; '9' |]
+
+    let findDigit indexFinder str =
+        let ix = indexFinder digits str
+        if ix < 0 then
+            failwith "no digits found"
+        else
+            int (String.getChar ix str) - int '0'
+
+    let findFirstDigit str = findDigit String.indexOfAny str
+
+    let findLastDigit str = findDigit String.lastIndexOfAny str
+
     let part1 input =
 
-        let findFirst xs =
-            let rec find xs =
-                match xs with
-                | [] -> failwith "no digits"
-                | '1' :: _ -> 1
-                | '2' :: _ -> 2
-                | '3' :: _ -> 3
-                | '4' :: _ -> 4
-                | '5' :: _ -> 5
-                | '6' :: _ -> 6
-                | '7' :: _ -> 7
-                | '8' :: _ -> 8
-                | '9' :: _ -> 9
-                | _ :: xs -> find xs
-
-            find xs
-
-        let findLast xs =
-            let rec find xs =
-                match xs with
-                | [] -> failwith "no digits"
-                | '1' :: _ -> 1
-                | '2' :: _ -> 2
-                | '3' :: _ -> 3
-                | '4' :: _ -> 4
-                | '5' :: _ -> 5
-                | '6' :: _ -> 6
-                | '7' :: _ -> 7
-                | '8' :: _ -> 8
-                | '9' :: _ -> 9
-                | _ :: xs -> find xs
-
-            find (List.rev xs)
-
         input
-        |> List.map (fun is -> (findFirst is, findLast is))
+        |> List.map (fun s -> (findFirstDigit s, findLastDigit s))
         |> List.map (fun (a, b) -> a * 10 + b)
         |> List.sum
 
     let part2 input =
 
-        let findFirst xs =
-            let rec find xs =
-                match xs with
-                | [] -> failwith "no digits"
-                | '1' :: _ -> 1
-                | '2' :: _ -> 2
-                | '3' :: _ -> 3
-                | '4' :: _ -> 4
-                | '5' :: _ -> 5
-                | '6' :: _ -> 6
-                | '7' :: _ -> 7
-                | '8' :: _ -> 8
-                | '9' :: _ -> 9
-                | 'o' :: 'n' :: 'e' :: _ -> 1
-                | 't' :: 'w' :: 'o' :: _ -> 2
-                | 't' :: 'h' :: 'r' :: 'e' :: 'e' :: _ -> 3
-                | 'f' :: 'o' :: 'u' :: 'r' :: _ -> 4
-                | 'f' :: 'i' :: 'v' :: 'e' :: _ -> 5
-                | 's' :: 'i' :: 'x' :: _ -> 6
-                | 's' :: 'e' :: 'v' :: 'e' :: 'n' :: _ -> 7
-                | 'e' :: 'i' :: 'g' :: 'h' :: 't' :: _ -> 8
-                | 'n' :: 'i' :: 'n' :: 'e' :: _ -> 9
-                | _ :: xs -> find xs
-
-            find xs
-
-        let findLast xs =
-            let rec find xs =
-                match xs with
-                | [] -> failwith "no digits"
-                | '1' :: _ -> 1
-                | '2' :: _ -> 2
-                | '3' :: _ -> 3
-                | '4' :: _ -> 4
-                | '5' :: _ -> 5
-                | '6' :: _ -> 6
-                | '7' :: _ -> 7
-                | '8' :: _ -> 8
-                | '9' :: _ -> 9
-                | 'e' :: 'n' :: 'o' :: _ -> 1
-                | 'o' :: 'w' :: 't' :: _ -> 2
-                | 'e' :: 'e' :: 'r' :: 'h' :: 't' :: _ -> 3
-                | 'r' :: 'u' :: 'o' :: 'f' :: _ -> 4
-                | 'e' :: 'v' :: 'i' :: 'f' :: _ -> 5
-                | 'x' :: 'i' :: 's' :: _ -> 6
-                | 'n' :: 'e' :: 'v' :: 'e' :: 's' :: _ -> 7
-                | 't' :: 'h' :: 'g' :: 'i' :: 'e' :: _ -> 8
-                | 'e' :: 'n' :: 'i' :: 'n' :: _ -> 9
-                | _ :: xs -> find xs
-
-            find (List.rev xs)
+        let replaceWords str =
+            str
+            |> String.replace "one"   "o1e"
+            |> String.replace "two"   "t2o"
+            |> String.replace "three" "t3e"
+            |> String.replace "four"  "f4r"
+            |> String.replace "five"  "f5e"
+            |> String.replace "six"   "s6x"
+            |> String.replace "seven" "s7n"
+            |> String.replace "eight" "e8t"
+            |> String.replace "nine"  "n9e"
 
         input
-        |> List.map (fun is -> (findFirst is, findLast is))
+        |> List.map replaceWords
+        |> List.map (fun s -> (findFirstDigit s, findLastDigit s))
         |> List.map (fun (a, b) -> a * 10 + b)
         |> List.sum
 
