@@ -15,7 +15,7 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"
 
     [<Fact>]
     let ``Parser works`` () =
-        
+
         let input = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue"
 
@@ -23,14 +23,14 @@ Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue"
 
         result |> should equal [
             Game (1, [
-                Hand [ (Blue, 3); (Red, 4) ]
-                Hand [ (Red, 1); (Green, 2); (Blue, 6) ]
+                Hand [ (Blue,  3); (Red,   4) ]
+                Hand [ (Red,   1); (Green, 2); (Blue, 6) ]
                 Hand [ (Green, 2) ]
             ])
             Game (2, [
-                Hand [ (Blue, 1); (Green, 2) ]
-                Hand [ (Green, 3); (Blue, 4); (Red, 1) ]
-                Hand [ (Green, 1); (Blue, 1) ]
+                Hand [ (Blue,  1); (Green, 2) ]
+                Hand [ (Green, 3); (Blue,  4); (Red,  1) ]
+                Hand [ (Green, 1); (Blue,  1) ]
             ])
         ]
 

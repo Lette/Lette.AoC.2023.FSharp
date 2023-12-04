@@ -6,22 +6,21 @@ open Microsoft.FSharp.Core.Operators.Checked
 module Day02 =
 
     type Cube = Red | Green | Blue
-
     type Hand = Hand of (Cube * int) list
-
     type Game = Game of int * Hand list
 
     let parse input () =
 
-        let redsP   = pint32 .>> spaceP .>> pstring "red"   |>> fun x -> (Red, x)
+        let redsP   = pint32 .>> spaceP .>> pstring "red"   |>> fun x -> (Red,   x)
         let greensP = pint32 .>> spaceP .>> pstring "green" |>> fun x -> (Green, x)
-        let bluesP  = pint32 .>> spaceP .>> pstring "blue"  |>> fun x -> (Blue, x)
+        let bluesP  = pint32 .>> spaceP .>> pstring "blue"  |>> fun x -> (Blue,  x)
 
         let partP = choice [attempt redsP; attempt greensP; bluesP]
         let handP = sepBy partP (pstring ", ") |>> Hand
         let handsP = sepBy handP (pstring "; ")
 
-        let gameP = pstring "Game " >>. pint32 .>> pstring ": " .>>. handsP |>> Game
+        let gameNumberP = pstring "Game " >>. pint32 .>> pstring ": "
+        let gameP = gameNumberP .>>. handsP |>> Game
 
         let allP = sepBy' gameP newlineP
 
@@ -29,13 +28,16 @@ module Day02 =
 
     let part1 input =
 
-        let rec isValidHand (Hand parts) =
+        let rec areValidParts parts =
             match parts with
             | [] -> true
-            | (Red,   r) :: ps when r <= 12 -> isValidHand (Hand ps)
-            | (Green, g) :: ps when g <= 13 -> isValidHand (Hand ps)
-            | (Blue,  b) :: ps when b <= 14 -> isValidHand (Hand ps)
+            | (Red,   r) :: ps when r <= 12 -> areValidParts ps
+            | (Green, g) :: ps when g <= 13 -> areValidParts ps
+            | (Blue,  b) :: ps when b <= 14 -> areValidParts ps
             | _ -> false
+
+        let isValidHand (Hand parts) =
+            areValidParts parts
 
         let isValidGame (Game (_, hands)) =
             hands |> List.forall isValidHand
@@ -49,20 +51,20 @@ module Day02 =
 
         let findMinimumNeededCubes (Game (_, hands)) =
 
-            let foldHand (r, g, b) (c, n) =
-                match c with
-                | Red   -> (max r n, g, b)
-                | Green -> (r, max g n, b)
-                | Blue  -> (r, g, max b n)
+            let foldPart (r, g, b) (cube, amount) =
+                match cube with
+                | Red   -> (max r amount, g,            b           )
+                | Green -> (r,            max g amount, b           )
+                | Blue  -> (r,            g,            max b amount)
 
-            let foldHands (r, g, b) (Hand parts) =
+            let foldHand (r, g, b) (Hand parts) =
                 parts
-                |> List.fold foldHand (r, g, b)
+                |> List.fold foldPart (r, g, b)
 
             hands
-            |> List.fold foldHands (0, 0, 0)
+            |> List.fold foldHand (0, 0, 0)
 
-        let findPower (r, g, b) = r * g * b
+        let findPower (reds, greens, blues) = reds * greens * blues
 
         input
         |> List.map findMinimumNeededCubes
