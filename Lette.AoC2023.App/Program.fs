@@ -61,6 +61,7 @@ module Program =
                 Day03.puzzle
                 Day04.puzzle
                 Day05.puzzle
+                Day06.puzzle
             ] : IPuzzle list
 
         Presentation.printHeader ()
