@@ -49,6 +49,16 @@ module Core =
         | false, _      -> None
         | true , result -> Some result
 
+    let gcd a b =
+        let rec gcd' a b =
+            if b = 0L then
+                a
+            else
+                gcd' b (a % b)
+        gcd' (abs a) (abs b)
+
+    let lcm a b = (a * b) / (gcd a b)
+
 [<RequireQualifiedAccess>]
 module List =
 
