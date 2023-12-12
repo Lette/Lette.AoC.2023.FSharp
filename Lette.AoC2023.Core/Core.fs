@@ -59,10 +59,29 @@ module Core =
 
     let lcm a b = (a * b) / (gcd a b)
 
+    let manhattanDistance (x1, y1) (x2, y2) =
+        abs (x1 - x2) + abs (y1 - y2)
+
 [<RequireQualifiedAccess>]
 module List =
 
     let tap f xs = List.map (fun x -> f x; x) xs
+
+    let foldi<'t, 'state> (folder: 'state -> int -> 't -> 'state) (state: 'state) (list: 't list) =
+
+        let rec loop index acc = function
+            | []      -> acc
+            | x :: xs -> loop (index + 1) (folder acc index x) xs
+
+        loop 0 state list
+
+    let pairs list =
+        let rec loop acc = function
+            | [] -> acc
+            | x :: xs ->
+                let pairs' = xs |> List.map (fun y -> (x, y))
+                loop (pairs' @ acc) xs
+        loop [] list
 
 [<RequireQualifiedAccess>]
 module Seq =
