@@ -94,6 +94,10 @@ module Tuple =
     let map fa fb (a, b) = (fa a, fb b)
 
 [<RequireQualifiedAccess>]
+module Array =
+    let tap f xs = Array.map (fun x -> f x; x) xs
+
+[<RequireQualifiedAccess>]
 module Array2D =
 
     let foldi<'t, 'state> (folder: 'state -> int -> int -> 't -> 'state) (state: 'state) (array: 't[,]) =
@@ -178,3 +182,6 @@ module String =
     let lastIndexOfAny chars (str : string) = str.LastIndexOfAny chars
     let getChar index (str : string) = str[index]
     let replace (a : string) (b : string) (str : string) = str.Replace (a, b)
+    let toCharArray (str : string) = str.ToCharArray ()
+    let ofArray (chars : char[]) = System.String chars
+    let ofList (chars : char list) : string = System.String (chars |> List.toArray)
