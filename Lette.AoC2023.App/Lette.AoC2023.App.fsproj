@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Lette.AoC2023.Core\Lette.AoC2023.Core.fsproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="Input\DayXX.txt" />
+        <Content Include="Input\Day01.txt" />
+        <Compile Include="Data.fs" />
+        <Compile Include="Solves\DayXX.fs" />
+        <Compile Include="Solves\Day01.fs" />
+        <Compile Include="Presentation.fs" />
+        <Compile Include="Timing.fs" />
+        <Compile Include="Program.fs" />
+    </ItemGroup>
+
+</Project>
